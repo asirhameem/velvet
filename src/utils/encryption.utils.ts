@@ -1,8 +1,9 @@
 import * as crypto from 'crypto';
+import config from '@/configs/config';
 
 const algorithm = 'aes-256-cbc';
-const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
-const iv = Buffer.from(process.env.ENCRYPTION_IV, 'hex');
+const key = Buffer.from(config.encryption.key, 'hex');
+const iv = Buffer.from(config.encryption.iv, 'hex');
 
 export const encrypt = (text: string): string => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);

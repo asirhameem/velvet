@@ -12,6 +12,7 @@ import {
 } from '@/constants/jwt.constant';
 import { AuthJwtPayload } from '@/interfaces/authJwtPayload.interface';
 import { ErrorMessages } from '@/enums/message.enum';
+import config from '@/configs/config';
 
 export class AuthService {
   private readonly userRepository: UserRepository;
@@ -87,13 +88,13 @@ export class AuthService {
     };
 
     return jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-      expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,
+      expiresIn: config.jwt.accessTokenExpiresIn,
     });
   }
 
   private generateRefreshToken(user: User): string {
     return jwt.sign({ id: user.id, email: user.email }, REFRESH_TOKEN_SECRET, {
-      expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRE,
+      expiresIn: config.jwt.refreshTokenExpiresIn,
     });
   }
 }

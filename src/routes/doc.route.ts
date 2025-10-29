@@ -2,9 +2,10 @@ import { Express } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import apiDocs from '@/api-docs.json';
 import path from 'path';
+import config from '@/configs/config';
 
 export function setupDocRoutes(app: Express) {
-  if (process.env.DISPLAY_SWAGGER === 'true') {
+  if (config.documentation.displaySwagger) {
     app.use(
       '/swagger',
       swaggerUi.serve,
@@ -18,7 +19,7 @@ export function setupDocRoutes(app: Express) {
     );
   }
 
-  if (process.env.DISPLAY_REDOC === 'true') {
+  if (config.documentation.displayRedoc) {
     app.get('/redoc', (_, res) => {
       const redocHtml = `
       <!DOCTYPE html>
@@ -37,8 +38,8 @@ export function setupDocRoutes(app: Express) {
   }
 
   if (
-    process.env.DISPLAY_SWAGGER === 'true' ||
-    process.env.DISPLAY_REDOC === 'true'
+    config.documentation.displaySwagger ||
+    config.documentation.displayRedoc
   ) {
     // Serve the api-docs.json file
     app.get('/api-docs.json', (_, res) => {
