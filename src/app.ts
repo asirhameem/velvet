@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import express, { Express, Response } from 'express';
-import dotenv from 'dotenv';
 import routes from '@/routes';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -9,11 +8,10 @@ import { bootstrapCronJob } from '@/utils/cronJob.utils';
 import { setupDocRoutes } from '@/routes/doc.route';
 import { CSP_CONFIG } from '@/constants/cspConfig.constant';
 import logger from '@/utils/logger.utils';
-
-dotenv.config();
+import config from '@/configs/config';
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = config.app.port;
 app.use(helmet(CSP_CONFIG));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
